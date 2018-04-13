@@ -14,6 +14,14 @@ except:
 KELNER_PORT = 0xf00d
 
 
+def tensor_to_json(tensor, pretty=False):
+    arr = tensor.astype(float).tolist()
+    if pretty:
+        return json.dumps(arr, indent=2, sort_keys=False)
+    else:
+        return json.dumps(arr)
+
+
 class HTTPHandler(http.BaseHTTPRequestHandler):
 
     kelner_server = None
@@ -26,7 +34,7 @@ class HTTPHandler(http.BaseHTTPRequestHandler):
         self.end_headers()
         try:
             self.wfile.write(bytes(message, 'utf8'))
-        except:
+        except IOException:
             self.wfile.write(bytes(message))
 
     def extract_content(self):
@@ -98,13 +106,6 @@ class KelnerServer():
         )
         self.server.serve_forever()
 
-    def tensor_to_json(self, tensor, pretty=False):
-        arr = tensor.astype(float).tolist()
-        if pretty:
-            return json.dumps(arr, indent=2, sort_keys=False)
-        else:
-            return json.dumps(arr)
-
     def get_model_info(self):
         """ Returns information about inputs and outputs of the model """
         dimension_values = lambda dim: tuple(d.value for d in dim)
@@ -127,7 +128,7 @@ class KelnerServer():
         """ Processes given content """
         data = self.extract_data(content, mimetype)
         inference = self.model(data)
-        message = self.tensor_to_json(inference)
+        message = tensor_to_json(inference)
         return message
 
     def extract_data(self, content, mimetype):
@@ -145,3 +146,4 @@ class KelnerServer():
             # Otherwise, just load bytes
             data = bytes(content)
         return data
+
