@@ -90,7 +90,6 @@ def classify(ctx, file, labels, labels_file, imagenet_labels, top):
 @click.option(
     '--load-model', '-m',
     help='Load a model',
-    default='',
     required=True,
     envvar='KELNER_MODEL')
 @click.option(
