@@ -86,6 +86,7 @@ class KelnerServer():
     def __del__(self):
         if self.server is not None:
             self.server.server_close()
+            self.server = None
 
     def __enter__(self):
         return self
@@ -93,6 +94,7 @@ class KelnerServer():
     def __exit__(self, *args, **kwargs):
         if self.server is not None:
             self.server.server_close()
+            self.server = None
 
     def serve_http(self, host, port):
         HTTPHandler.kelner_server = self

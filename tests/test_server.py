@@ -7,6 +7,7 @@ from . import fixtures
 
 
 def test_get(sample_echo_server):
+    pass
     r = requests.get(
         sample_echo_server.url
     )
@@ -14,6 +15,7 @@ def test_get(sample_echo_server):
 
 
 def test_empty_post(sample_echo_server):
+    pass
     headers = {'Content-Length': 0}
     try:
         r = requests.post(
@@ -26,6 +28,7 @@ def test_empty_post(sample_echo_server):
 
 
 def test_post(sample_echo_server):
+    pass
     data = '[1.0, 2.0, 3.0]'
     headers = {
         'Content-Type': 'application/json',
