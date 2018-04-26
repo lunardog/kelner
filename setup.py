@@ -20,7 +20,7 @@ dependencies = [
 
 setup(
     name='kelner',
-    version='0.1.3',
+    version='0.1.4',
     url='https://github.com/lunardog/kelner',
     license='BSD',
     author='Leszek Rybicki',
