@@ -1,15 +1,16 @@
 import io
+import sys
 import numpy as np
 from PIL import Image
 import json
 import requests
 
-try:
-    # python 3
-    import http.server as http
-except:
+if sys.version_info[0] < 3:
     # python 2
     import BaseHTTPServer as http
+else:
+    # python 3
+    import http.server as http
 
 KELNER_PORT = 0xf00d
 
@@ -32,10 +33,10 @@ class HTTPHandler(http.BaseHTTPRequestHandler):
         self.send_response(requests.codes.ok)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        try:
-            self.wfile.write(bytes(message, 'utf8'))
-        except IOError:
+        if sys.version_info[0] < 3:
             self.wfile.write(bytes(message))
+        else:
+            self.wfile.write(bytes(message, 'utf8'))
 
     def extract_content(self):
         # check content type
