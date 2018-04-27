@@ -1,17 +1,26 @@
 import io
+import sys
 import numpy as np
 from PIL import Image
 import json
 import requests
 
-try:
-    # python 3
-    import http.server as http
-except:
+if sys.version_info[0] < 3:
     # python 2
     import BaseHTTPServer as http
+else:
+    # python 3
+    import http.server as http
 
 KELNER_PORT = 0xf00d
+
+
+def tensor_to_json(tensor, pretty=False):
+    arr = tensor.astype(float).tolist()
+    if pretty:
+        return json.dumps(arr, indent=2, sort_keys=False)
+    else:
+        return json.dumps(arr)
 
 
 class HTTPHandler(http.BaseHTTPRequestHandler):
@@ -24,10 +33,10 @@ class HTTPHandler(http.BaseHTTPRequestHandler):
         self.send_response(requests.codes.ok)
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        try:
-            self.wfile.write(bytes(message, 'utf8'))
-        except:
+        if sys.version_info[0] < 3:
             self.wfile.write(bytes(message))
+        else:
+            self.wfile.write(bytes(message, 'utf8'))
 
     def extract_content(self):
         # check content type
@@ -78,6 +87,7 @@ class KelnerServer():
     def __del__(self):
         if self.server is not None:
             self.server.server_close()
+            self.server = None
 
     def __enter__(self):
         return self
@@ -85,6 +95,7 @@ class KelnerServer():
     def __exit__(self, *args, **kwargs):
         if self.server is not None:
             self.server.server_close()
+            self.server = None
 
     def serve_http(self, host, port):
         HTTPHandler.kelner_server = self
@@ -97,13 +108,6 @@ class KelnerServer():
             HTTPHandler
         )
         self.server.serve_forever()
-
-    def tensor_to_json(self, tensor, pretty=False):
-        arr = tensor.astype(float).tolist()
-        if pretty:
-            return json.dumps(arr, indent=2, sort_keys=False)
-        else:
-            return json.dumps(arr)
 
     def get_model_info(self):
         """ Returns information about inputs and outputs of the model """
@@ -127,7 +131,7 @@ class KelnerServer():
         """ Processes given content """
         data = self.extract_data(content, mimetype)
         inference = self.model(data)
-        message = self.tensor_to_json(inference)
+        message = tensor_to_json(inference)
         return message
 
     def extract_data(self, content, mimetype):
@@ -145,3 +149,4 @@ class KelnerServer():
             # Otherwise, just load bytes
             data = bytes(content)
         return data
+
