@@ -34,7 +34,7 @@ class HTTPHandler(http.BaseHTTPRequestHandler):
         self.end_headers()
         try:
             self.wfile.write(bytes(message, 'utf8'))
-        except IOException:
+        except IOError:
             self.wfile.write(bytes(message))
 
     def extract_content(self):
