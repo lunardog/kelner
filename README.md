@@ -15,19 +15,23 @@ Ridiculously simple model serving.
 
 To use it:
 
+```bash
     $ kelnerd --help
+```
 
 Serve a saved model:
 
+```bash
     $ kelnerd -m ./models/inception_v3.h5
     Using TensorFlow backend.
     Loading a Keras model from ./models/inception_v3.h5
     Loaded.
     Starting server...
     Listening on 0.0.0.0:61453
-
+```
 Serve a model from a Tensorflow ProtoBuff file:
 
+```bash
     $ wget https://storage.googleapis.com/download.tensorflow.org/models/inception_dec_2015.zip
     $ unzip inception_dec_2015.zip
         Archive:  inception_dec_2015.zip
@@ -35,10 +39,13 @@ Serve a model from a Tensorflow ProtoBuff file:
         inflating: LICENSE
         inflating: tensorflow_inception_graph.pb
     $ kelnerd -m tensorflow_inception_graph.pb --engine tensorflow --input-node ExpandDims --output-node softmax
+```
 
 Send a request to the model:
 
+```bash
     $ curl --data-binary "@dog.jpg" localhost:61453 -X POST -H "Content-Type: image/jpeg"
+```
 
 The response should be a JSON-encoded array of floating point numbers.
 
@@ -46,12 +53,14 @@ For a fancy client (not really necessary, but useful) you can use the `kelner` c
 
 This is how you get the top 5 labels from the server you ran above (note the `head -n 5` part):
 
+```bash
     $ kelner classify dog.jpg --imagenet-labels --top 5
     boxer: 0.973630
     Saint Bernard: 0.001821
     bull mastiff: 0.000624
     Boston bull: 0.000486
     Greater Swiss Mountain dog: 0.000377
+```
 
 ## FAQ
 
