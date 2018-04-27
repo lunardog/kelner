@@ -1,0 +1,44 @@
+sudo: false
+language: python
+python:
+- '2.6'
+- '2.7'
+- '3.2'
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
+- pypy
+- pypy3
+- pypy3.3-5.2-alpha1
+- pypy3.3-5.5-alpha
+- 3.7-dev
+install:
+- pip install wheel codecov coverage
+- python setup.py bdist_wheel
+- pip install ./dist/tox_travis-*.whl
+script: tox --installpkg ./dist/tox_travis-*.whl
+after_success: coverage combine && codecov
+stages:
+- test
+- name: deploy
+  if: tag IS present
+jobs:
+  fast_finish: true
+  include:
+  - python: 3.6
+    env: TOXENV=docs
+  - python: 3.6
+    env: TOXENV=desc
+  - stage: deploy
+    python: 3.6
+    install: true
+    script: true
+    after_success: true
+    deploy:
+      provider: pypi
+      user: lunardog
+      password:
+        secure: rCMJpsOoiTPdrNCIcLHujm1dRM0WRlnhuB/OMFhJckjLHjJcADulvHJ6lDz47YF6rfmKRq4zRxlBtxRgoVdmSqlpLluCS6hqdyqUF/rkY4rTZqLeXtcb2sfo3dsrgPribru5m+DBoupl2z19WfYiU5DR7Q+FigWtnGOrkL5kG1cW8cWwzeqFmTBpUgGMPOhGVVYjOJstFkqtHZ8dfFzrGzCxYSrZ/dDQr8wZ2VriNkeMgNKf0wQg7ybrIsvQyycjg/IxUdzcB9iyVI/Dg6kaAgOv/25tyd1VG20+GU4J2opMk+zVBk7FAX6PUdcgGj0vAHaQilViOB30ZlPnQkz4NqWd77w76yiECxkTGLfRmN9VYlCJvbNuB5n2Was5b01RR5s4bttMK60HDIIeiAuc0Ibk1CanfbBtER8QawP6R6Ir5xjupVMS7dT7z3aaxhWcGB1bAptolyIiDcZlCamEKcQnJENKEboJEtiWBejC6skk8c92Wqf2PPP/JVWudOys9QbMYdR0EdLCPQZZ+bKF2uGJR1BIu2bo8z9tvKeEORWPcqQbqpKalVALJ4FRHX8SZYH+hS4en5mYO90K/44ofsamw9eyHxuuqzgpzReMntXmdfzB/s4F7HzAJo0NO37UvhQMYfxcYUV8EIVPJ2qvpggwRHN+S/QD+gZ1kSHGjK4=
+      distributions: bdist_wheel
+
