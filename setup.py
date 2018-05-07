@@ -14,7 +14,6 @@ dependencies = [
     'boto3',
     'python-datauri',
     'Pillow>=4.0',
-    'requests-mock'
 ]
 
 
@@ -38,7 +37,7 @@ setup(
             'kelnerd = kelner.cli:kelnerd',
         ],
     },
-    tests_require=dependencies + ['tempfile', 'moto', 'requests-mock'],
+    tests_require=dependencies + ['tempfile', 'moto'],
     classifiers=[
         # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         # 'Development Status :: 1 - Planning',
