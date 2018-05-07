@@ -37,7 +37,7 @@ setup(
             'kelnerd = kelner.cli:kelnerd',
         ],
     },
-    tests_require=dependencies + ['tempfile', 'moto'],
+    tests_require=dependencies + ['tempfile', 'moto', 'tox'],
     classifiers=[
         # As from http://pypi.python.org/pypi?%3Aaction=list_classifiers
         # 'Development Status :: 1 - Planning',
