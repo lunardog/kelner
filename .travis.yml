@@ -12,8 +12,6 @@ python:
 - 3.7-dev
 install:
 - python setup.py install
-- pip install tox
-script: tox
 after_success: coverage combine && codecov
 stages:
 - test
