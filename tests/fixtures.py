@@ -11,7 +11,7 @@ import json
 from kelner import client
 from kelner import server
 
-import requests_mock
+# import requests_mock
 
 try:
     # python 3
@@ -99,14 +99,14 @@ def sample_echo_server():
         yield s
 
 
-@pytest.fixture(scope='function')
-def sample_server():
-    with requests_mock.mock() as m:
-        m.post(
-            "http://127.0.0.1:{}".format(SERVER_PORT),
-            text=json.dumps(DEFAULT_RESPONSE)
-        )
-        yield m
+# @pytest.fixture(scope='function')
+# def sample_server():
+#     with requests_mock.mock() as m:
+#         m.post(
+#             "http://127.0.0.1:{}".format(SERVER_PORT),
+#             text=json.dumps(DEFAULT_RESPONSE)
+#         )
+#         yield m
 
 
 @pytest.fixture(scope='function')
