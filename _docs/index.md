@@ -1,11 +1,16 @@
-# Kelner
+---
+# You don't need to edit this file, it's empty on purpose.
+# Edit theme's home layout instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+---
+
+## What is Kelner?
 
 Ridiculously simple model serving.
 
 1. Get an exported model (download or train and save)
 2. `kelnerd -m SAVED_MODEL_FILE`
 3. There is no step 3, your model is served
-
 
 ## Installation
 

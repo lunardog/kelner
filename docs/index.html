@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>What is Kelner? | Kelner</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="What is Kelner?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Ridiculously Simple ML Model Serving" />
+<meta property="og:description" content="Ridiculously Simple ML Model Serving" />
+<link rel="canonical" href="/" />
+<meta property="og:url" content="/" />
+<meta property="og:site_name" content="Kelner" />
+<script type="application/ld+json">
+{"url":"/","headline":"What is Kelner?","description":"Ridiculously Simple ML Model Serving","name":"Kelner","@type":"WebSite","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=106926b192a03fcea4f18d6fa92f3c27e4f93670">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><a href="/">Kelner</a></h1>
+        
+        
+
+        <p>Ridiculously Simple ML Model Serving</p>
+
+        
+        <p class="view"><a href="http://github.com/lunardog/kelner">View the Project on GitHub <small>lunardog/kelner</small></a></p>
+        
+
+        
+
+        
+      </header>
+      <section>
+
+      <h2 id="what-is-kelner">What is Kelner?</h2>
+
+<p>Ridiculously simple model serving.</p>
+
+<ol>
+  <li>Get an exported model (download or train and save)</li>
+  <li><code class="highlighter-rouge">kelnerd -m SAVED_MODEL_FILE</code></li>
+  <li>There is no step 3, your model is served</li>
+</ol>
+
+<h2 id="installation">Installation</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install kelner
+</code></pre></div></div>
+
+<h2 id="usage">Usage</h2>
+
+<p>To use it:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelnerd <span class="nt">--help</span>
+</code></pre></div></div>
+
+<p>Serve a saved model:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelnerd <span class="nt">-m</span> ./models/inception_v3.h5
+    Using TensorFlow backend.
+    Loading a Keras model from ./models/inception_v3.h5
+    Loaded.
+    Starting server...
+    Listening on 0.0.0.0:61453
+</code></pre></div></div>
+<p>Serve a model from a Tensorflow ProtoBuff file:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>wget https://storage.googleapis.com/download.tensorflow.org/models/inception_dec_2015.zip
+    <span class="nv">$ </span>unzip inception_dec_2015.zip
+        Archive:  inception_dec_2015.zip
+        inflating: imagenet_comp_graph_label_strings.txt
+        inflating: LICENSE
+        inflating: tensorflow_inception_graph.pb
+    <span class="nv">$ </span>kelnerd <span class="nt">-m</span> tensorflow_inception_graph.pb <span class="nt">--engine</span> tensorflow <span class="nt">--input-node</span> ExpandDims <span class="nt">--output-node</span> softmax
+</code></pre></div></div>
+
+<p>Send a request to the model:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>curl <span class="nt">--data-binary</span> <span class="s2">"@dog.jpg"</span> localhost:61453 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: image/jpeg"</span>
+</code></pre></div></div>
+
+<p>The response should be a JSON-encoded array of floating point numbers.</p>
+
+<p>For a fancy client (not really necessary, but useful) you can use the <code class="highlighter-rouge">kelner</code> command.</p>
+
+<p>This is how you get the top 5 labels from the server you ran above (note the <code class="highlighter-rouge">head -n 5</code> part):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelner classify dog.jpg <span class="nt">--imagenet-labels</span> <span class="nt">--top</span> 5
+    boxer: 0.973630
+    Saint Bernard: 0.001821
+    bull mastiff: 0.000624
+    Boston bull: 0.000486
+    Greater Swiss Mountain dog: 0.000377
+</code></pre></div></div>
+
+<h2 id="faq">FAQ</h2>
+
+<h3 id="who-is-this-for">Who is this for?</h3>
+
+<p>Machine learning researchers who don’t want to deal with building a web server for every model they export.</p>
+
+<p>Kelner loads a saved Keras or Tensorflow model and starts an HTTP server that pipes POST request body to the model and returns JSON-encoded model response.</p>
+
+<h3 id="how-is-it-different-from-tensorflow-serving">How is it different from Tensorflow Serving?</h3>
+
+<ol>
+  <li>Kelner is ridiculously simple to install and run</li>
+  <li>Kelner also works with saved Keras models</li>
+  <li>Kelner works with one model per installation</li>
+  <li>Kelner doesn’t do model versioning</li>
+  <li>Kelner is JSON over HTTP while tf-serving is ProtoBuf over gRPC</li>
+  <li>Kelner’s protocol is:
+    <ul>
+      <li><code class="highlighter-rouge">GET</code> returns model input and output specs as JSON</li>
+      <li><code class="highlighter-rouge">POST</code> expects JSON or an image file, returns JSON-encoded result of model inference</li>
+    </ul>
+  </li>
+</ol>
+
+
+      </section>
+      <footer>
+        
+        <p>This project is maintained by <a href="http://github.com/lunardog">lunardog</a></p>
+        
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="/assets/js/scale.fix.js"></script>
+    
+  </body>
+</html>
