@@ -12,29 +12,15 @@ Ridiculously simple model serving.
 2. `kelnerd -m SAVED_MODEL_FILE`
 3. There is no step 3, your model is served
 
-## Installation
+## Quickstart
 
+### Install `kelner`
+
+```bash
     $ pip install kelner
-
-## Usage
-
-To use it:
-
-```bash
-    $ kelnerd --help
 ```
 
-Serve a saved model:
-
-```bash
-    $ kelnerd -m ./models/inception_v3.h5
-    Using TensorFlow backend.
-    Loading a Keras model from ./models/inception_v3.h5
-    Loaded.
-    Starting server...
-    Listening on 0.0.0.0:61453
-```
-Serve a model from a Tensorflow ProtoBuff file:
+### Download a Tensorflow ProtoBuff file
 
 ```bash
     $ wget https://storage.googleapis.com/download.tensorflow.org/models/inception_dec_2015.zip
@@ -46,7 +32,13 @@ Serve a model from a Tensorflow ProtoBuff file:
     $ kelnerd -m tensorflow_inception_graph.pb --engine tensorflow --input-node ExpandDims --output-node softmax
 ```
 
-Send a request to the model:
+### Run the server
+
+```bash
+    $ kelnerd -m tensorflow_inception_graph.pb --engine tensorflow --input-node ExpandDims --output-node softmax
+```
+
+### Send a request to the model:
 
 ```bash
     $ curl --data-binary "@dog.jpg" localhost:61453 -X POST -H "Content-Type: image/jpeg"

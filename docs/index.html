@@ -12,14 +12,14 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Ridiculously Simple ML Model Serving" />
 <meta property="og:description" content="Ridiculously Simple ML Model Serving" />
-<link rel="canonical" href="http://localhost:4000/kelner/" />
-<meta property="og:url" content="http://localhost:4000/kelner/" />
+<link rel="canonical" href="http://localhost:4000/" />
+<meta property="og:url" content="http://localhost:4000/" />
 <meta property="og:site_name" content="Kelner" />
 <script type="application/ld+json">
-{"headline":"What is Kelner?","url":"http://localhost:4000/kelner/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/kelner/kelner.png"}},"description":"Ridiculously Simple ML Model Serving","name":"Kelner","@type":"WebSite","@context":"http://schema.org"}</script>
+{"headline":"What is Kelner?","url":"http://localhost:4000/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/kelner.png"}},"description":"Ridiculously Simple ML Model Serving","name":"Kelner","@type":"WebSite","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/kelner/assets/css/style.css?v=017292300dc54a9acb5813406b4ee357db010121">
+    <link rel="stylesheet" href="/assets/css/style.css?v=82471c3b97e05cdfde3de5ee31fbc5fccf50b50b">
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -27,10 +27,10 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="http://localhost:4000/kelner/">Kelner</a></h1>
+        <h1><a href="http://localhost:4000/">Kelner</a></h1>
         
         
-          <img src="/kelner/kelner.png" alt="Logo" />
+          <img src="/kelner.png" alt="Logo" />
         
 
         <p>Ridiculously Simple ML Model Serving</p>
@@ -55,28 +55,14 @@
   <li>There is no step 3, your model is served</li>
 </ol>
 
-<h2 id="installation">Installation</h2>
+<h2 id="quickstart">Quickstart</h2>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ pip install kelner
+<h3 id="install-kelner">Install <code class="highlighter-rouge">kelner</code></h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>pip install kelner
 </code></pre></div></div>
 
-<h2 id="usage">Usage</h2>
-
-<p>To use it:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelnerd <span class="nt">--help</span>
-</code></pre></div></div>
-
-<p>Serve a saved model:</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelnerd <span class="nt">-m</span> ./models/inception_v3.h5
-    Using TensorFlow backend.
-    Loading a Keras model from ./models/inception_v3.h5
-    Loaded.
-    Starting server...
-    Listening on 0.0.0.0:61453
-</code></pre></div></div>
-<p>Serve a model from a Tensorflow ProtoBuff file:</p>
+<h3 id="download-a-tensorflow-protobuff-file">Download a Tensorflow ProtoBuff file</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>wget https://storage.googleapis.com/download.tensorflow.org/models/inception_dec_2015.zip
     <span class="nv">$ </span>unzip inception_dec_2015.zip
@@ -87,7 +73,12 @@
     <span class="nv">$ </span>kelnerd <span class="nt">-m</span> tensorflow_inception_graph.pb <span class="nt">--engine</span> tensorflow <span class="nt">--input-node</span> ExpandDims <span class="nt">--output-node</span> softmax
 </code></pre></div></div>
 
-<p>Send a request to the model:</p>
+<h3 id="run-the-server">Run the server</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>kelnerd <span class="nt">-m</span> tensorflow_inception_graph.pb <span class="nt">--engine</span> tensorflow <span class="nt">--input-node</span> ExpandDims <span class="nt">--output-node</span> softmax
+</code></pre></div></div>
+
+<h3 id="send-a-request-to-the-model">Send a request to the model:</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nv">$ </span>curl <span class="nt">--data-binary</span> <span class="s2">"@dog.jpg"</span> localhost:61453 <span class="nt">-X</span> POST <span class="nt">-H</span> <span class="s2">"Content-Type: image/jpeg"</span>
 </code></pre></div></div>
@@ -139,7 +130,7 @@
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
-    <script src="/kelner/assets/js/scale.fix.js"></script>
+    <script src="/assets/js/scale.fix.js"></script>
     
   </body>
 </html>
