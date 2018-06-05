@@ -1,2 +1,3 @@
-from . import keras_model
-from . import tensorflow_model
+from .keras_model import KerasModel
+from .tensorflow_model import TensorflowModel
+
