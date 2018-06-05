@@ -111,17 +111,16 @@ class KelnerServer():
 
     def get_model_info(self):
         """ Returns information about inputs and outputs of the model """
-        dimension_values = lambda dim: tuple(d.value for d in dim)
         info = {}
         if self.model.input is not None:
             info['in'] = {
                 'name': self.model.input.name,
-                'shape': dimension_values(self.model.input.shape)
+                'shape': dim_to_json(self.model.input.shape)
             }
         if self.model.output is not None:
             info['out'] = {
                 'name': self.model.output.name,
-                'shape': dimension_values(self.model.output.shape)
+                'shape': dim_to_json(self.model.output.shape)
             }
         if self.model.labels is not None:
             info['labels'] = self.model.labels
@@ -129,24 +128,28 @@ class KelnerServer():
 
     def process_content(self, content, mimetype):
         """ Processes given content """
-        data = self.extract_data(content, mimetype)
+        data = content_to_data(content, mimetype)
         inference = self.model(data)
         message = tensor_to_json(inference)
         return message
 
-    def extract_data(self, content, mimetype):
-        """ Turns content into a numpy array, taking mimetype into account """
-        if mimetype.startswith('image/'):
-            # Load image
-            stream = io.BytesIO(content)
-            img = Image.open(stream)
-            data = np.array(img)[np.newaxis]
-        elif mimetype == 'application/json':
-            # Load json
-            data = json.loads(content.decode())
-            data = np.array(data, np.float32)
-        else:
-            # Otherwise, just load bytes
-            data = bytes(content)
-        return data
 
+def content_to_data(content, mimetype):
+    """ Turns content into a numpy array, taking mimetype into account """
+    if mimetype.startswith('image/'):
+        # Load image
+        stream = io.BytesIO(content)
+        img = Image.open(stream)
+        data = np.array(img)[np.newaxis]
+    elif mimetype == 'application/json':
+        # Load json
+        data = json.loads(content.decode())
+        data = np.array(data, np.float32)
+    else:
+        # Otherwise, just load bytes
+        data = bytes(content)
+    return data
+
+
+def dim_to_json(dim):
+    return [d.value for d in dim]
