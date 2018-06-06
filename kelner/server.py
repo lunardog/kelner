@@ -129,7 +129,7 @@ class KelnerServer():
     def process_content(self, content, mimetype):
         """ Processes given content """
         data = content_to_data(content, mimetype)
-        inference = self.model(data)
+        inference = self.model.__infer_batch__(data)
         message = tensor_to_json(inference)
         return message
 

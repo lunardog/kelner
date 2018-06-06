@@ -56,6 +56,31 @@ This is how you get the top 5 labels from the server you ran above (note the `he
     Greater Swiss Mountain dog: 0.000377
 ```
 
+## Use `kelner` in code
+
+If you need to, you can also use `kelner` in your code.
+
+Let's create an example model:
+
+```python
+import keras
+
+l1 = keras.layers.Input((2,))
+l2 = keras.layers.Dense(3)(l1)
+l3 = keras.layers.Dense(1)(l2)
+model = keras.models.Model(inputs=l1, outputs=l3)
+model.save("saved_model.h5")
+```
+
+Now load the model in `kelner`:
+
+```python
+import kelner
+
+loaded_model = kelner.model.load("saved_model.h5")  # keras engine is the default
+kelner.serve(loaded_model, port=8080)
+```
+
 ## FAQ
 
 ### Who is this for?
