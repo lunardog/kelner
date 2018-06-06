@@ -1,6 +1,6 @@
 # Kelner
 
-![kelner](_docs/kelner.png)
+<img src="_docs/kelner.png" style="width: 256px; height: 259px; float: left" alt="Kelner logo">
 
 Ridiculously simple model serving.
 
