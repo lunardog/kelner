@@ -2,15 +2,18 @@ import requests
 import json
 import yaml
 import magic
+import sys
 import os
 
 
 def dict_to_yaml(dictionary):
+    """ Translates a dictionary to yaml """
     yaml_lines = ['%s: %f' % (key, dictionary[key]) for key in dictionary]
     return os.linesep.join(yaml_lines)
 
 
 def get_label(labels, index):
+    """ Gets label if exists, otherwise returns label number """
     if index < len(labels):
         return labels[index]
     else:
@@ -91,9 +94,9 @@ class KelnerClient(object):
         return scores[0:top]
 
     def request(self, data, mimetype='application/json', size=None):
-        try:
+        if sys.version_info[0] < 3:
             encoded = bytes(str(data), 'utf-8')
-        except:
+        else:
             encoded = bytes(str(data))
         if size is None:
             size = len(encoded)
