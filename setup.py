@@ -8,7 +8,6 @@ dependencies = [
     'Keras>=2.0.0',
     'h5py',
     'numpy>=1.0',
-    'python-magic>=0.4.0',
     'requests',
     'boto3',
     'python-datauri',

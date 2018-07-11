@@ -2,9 +2,9 @@ click>=5.0
 Keras>=2.0.0
 h5py
 numpy>=1.0
-python-magic>=0.4.0
 requests
 requests-mock
 boto3
 python-datauri
 Pillow>=4.0
+tensorflow
