@@ -1,7 +1,7 @@
 import requests
+import mimetypes
 import json
 import yaml
-import magic
 import sys
 import os
 
@@ -35,7 +35,7 @@ def attach_labels(vector, labels):
 
 def decode_file(path):
     size = os.path.getsize(path)
-    mimetype = magic.from_file(path, mime=True)
+    mimetype = mimetypes.guess_type(path, strict=True)
     with open(path, 'rb') as file:
         contents = file.read(size)
 
