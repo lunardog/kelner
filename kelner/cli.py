@@ -142,8 +142,6 @@ def kelnerd(
     from . import models
 
     flags = []
-    if use_mobilenet:
-        flags += ['USE_MOBILENET']
     if extract:
         flags += ['EXTRACT']
 

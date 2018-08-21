@@ -17,11 +17,6 @@ class KerasModel(kelner_model.KelnerModel):
             flags=[]
     ):
         custom_objs = {}
-        if 'USE_MOBILENET' in flags:
-            custom_objs = {
-                'relu6': keras.applications.mobilenet.relu6,
-                'DepthwiseConv2D': keras.applications.mobilenet.DepthwiseConv2D
-            }
         file_name = get_file(
             model_file_name,
             extract=('EXTRACT' in flags)

@@ -7,7 +7,6 @@ from kelner import utils
 
 from .fixtures import runner
 from .fixtures import sample_model
-from .fixtures import sample_mobilenet_model
 from .fixtures import sample_labels
 from .fixtures import named_temp_file
 
@@ -20,14 +19,6 @@ def test_load_keras_model(runner, sample_model, named_temp_file):
     assert model is not None
     named_temp_file.close()
 
-
-def test_load_mobilenet_model(runner, sample_mobilenet_model, named_temp_file):
-    # save a model and try loading it
-    model_file_name = named_temp_file.name
-    sample_mobilenet_model.save(model_file_name)
-    model = keras_model.load(model_file_name, flags=['USE_MOBILENET'])
-    assert model is not None
-    named_temp_file.close()
 
 
 def test_load_remote_model(runner, sample_model, named_temp_file):

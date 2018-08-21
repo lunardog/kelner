@@ -63,16 +63,6 @@ def sample_model():
 
 
 @pytest.fixture(scope='function')
-def sample_mobilenet_model():
-    inp = layers.Input(shape=(32,), name='input-01')
-    out = layers.Dense(16,
-                       activation=keras.applications.mobilenet.relu6,
-                       name='output-01')(inp)
-    mod = keras.models.Model(inputs=inp, outputs=out)
-    return mod
-
-
-@pytest.fixture(scope='function')
 def named_temp_file():
     f = tempfile.NamedTemporaryFile()
     return f
