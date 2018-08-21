@@ -34,6 +34,9 @@ def attach_labels(vector, labels):
 
 
 def decode_file(path):
+    """
+    Loads file contents
+    """
     size = os.path.getsize(path)
     mimetype, encoding = mimetypes.guess_type(path, strict=True)
     with open(path, 'rb') as file:
