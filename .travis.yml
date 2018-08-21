@@ -10,8 +10,6 @@ python:
 - pypy
 - pypy3
 - 3.7-dev
-install:
-- python setup.py install
 after_success: coverage combine && codecov
 stages:
 - test
