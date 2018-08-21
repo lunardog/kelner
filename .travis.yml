@@ -11,6 +11,10 @@ python:
 - pypy3
 - 3.7-dev
 after_success: coverage combine && codecov
+script:
+- python setup.py build
+- tox
+install: true
 stages:
 - test
 - name: deploy
