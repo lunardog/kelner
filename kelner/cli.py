@@ -120,9 +120,6 @@ def classify(ctx, file, labels, labels_file, imagenet_labels, top):
     '--port', '-p',
     default=server.KELNER_PORT,
     help='Port to listen on (default %d)' % (server.KELNER_PORT))
-@click.option(
-    '--use-mobilenet',
-    is_flag=True)
 @click.option('--dry-run', is_flag=True)
 @click.version_option()
 def kelnerd(
@@ -134,7 +131,6 @@ def kelnerd(
         output_node,
         host,
         port,
-        use_mobilenet,
         dry_run
 ):
     """ Serves Keras and Tensorflow models """
@@ -142,8 +138,6 @@ def kelnerd(
     from . import models
 
     flags = []
-    if use_mobilenet:
-        flags += ['USE_MOBILENET']
     if extract:
         flags += ['EXTRACT']
 

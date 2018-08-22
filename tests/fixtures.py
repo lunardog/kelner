@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+import sys
 import pytest
 import keras
 from keras import layers
@@ -13,12 +14,12 @@ from kelner import server
 
 # import requests_mock
 
-try:
-    # python 3
-    import http.server as http
-except:
+if sys.version_info[0] < 3:
     # python 2
     import BaseHTTPServer as http
+else:
+    # python 3
+    import http.server as http
 
 SERVER_PORT = 8001
 ECHO_SERVER_PORT = 8002
@@ -58,16 +59,6 @@ def runner():
 def sample_model():
     inp = layers.Input(shape=(32,), name='input-01')
     out = layers.Dense(16, activation='softmax', name='output-01')(inp)
-    mod = keras.models.Model(inputs=inp, outputs=out)
-    return mod
-
-
-@pytest.fixture(scope='function')
-def sample_mobilenet_model():
-    inp = layers.Input(shape=(32,), name='input-01')
-    out = layers.Dense(16,
-                       activation=keras.applications.mobilenet.relu6,
-                       name='output-01')(inp)
     mod = keras.models.Model(inputs=inp, outputs=out)
     return mod
 

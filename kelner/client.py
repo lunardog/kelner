@@ -34,19 +34,18 @@ def attach_labels(vector, labels):
 
 
 def decode_file(path):
+    """
+    Loads file contents
+    """
     size = os.path.getsize(path)
-    mimetype = mimetypes.guess_type(path, strict=True)
+    mimetype, encoding = mimetypes.guess_type(path, strict=True)
     with open(path, 'rb') as file:
         contents = file.read(size)
+    if mimetype in ['text/plain', 'application/json']:
+        if encoding is None:
+            encoding = 'utf-8'
+        contents = contents.decode(encoding)
 
-    # if detected as text/plain, try opening as json
-    if mimetype == 'text/plain':
-        try:
-            contents = contents.decode('utf-8')
-            json.loads(contents)
-            mimetype = 'application/json'
-        except:
-            pass
     return contents, mimetype, size
 
 
