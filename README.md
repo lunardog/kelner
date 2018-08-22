@@ -1,5 +1,7 @@
 # Kelner
 
+[![Build Status](https://travis-ci.org/lunardog/kelner.svg?branch=master)](https://travis-ci.org/lunardog/kelner)
+
 <img src="_docs/kelner.png" width="256px" height="260px" alt="Kelner logo">
 
 Ridiculously simple model serving.
